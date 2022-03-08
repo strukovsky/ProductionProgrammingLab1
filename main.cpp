@@ -73,31 +73,31 @@ int main() {
                 maxDimension / 2,
                 maxDimension / 2);
 
+    int **mat5;
+    splitMatrix(maxDimension,
+                castedM2,
+                mat5,
+                0,
+                0);
+    int **mat6;
+    splitMatrix(maxDimension,
+                castedM2,
+                mat6,
+                0,
+                maxDimension / 2);
+    int **mat7;
+    splitMatrix(maxDimension,
+                castedM2,
+                mat7,
+                maxDimension / 2,
+                0);
+    int **mat8;
+    splitMatrix(maxDimension,
+                castedM2,
+                mat8,
+                maxDimension / 2,
+                maxDimension / 2);
 
-    int **mat5 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat5[i] = new int[maxDimension / 2];
-        for (int j = 0; j < maxDimension / 2; j++)
-            mat5[i][j] = castedM2[i][j];
-    }
-    int **mat6 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat6[i] = new int[maxDimension / 2];
-        for (int j = 0; j < maxDimension / 2; j++)
-            mat6[i][j] = castedM2[i][j + maxDimension / 2];
-    }
-    int **mat7 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat7[i] = new int[maxDimension / 2];
-        for (int j = 0; j < maxDimension / 2; j++)
-            mat7[i][j] = castedM2[i + maxDimension / 2][j];
-    }
-    int **mat8 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat8[i] = new int[maxDimension / 2];
-        for (int j = 0; j < maxDimension / 2; j++)
-            mat8[i][j] = castedM2[i + maxDimension / 2][j + maxDimension / 2];
-    }
 
     ///////////////////////////////////////////////////////////////////////////////
     ////////////////////////Создание промежуточных матриц//////////////////////////
