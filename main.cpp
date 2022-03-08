@@ -48,53 +48,53 @@ int main() {
     ///////////////Разбиение матриц на подматрицы и их заполнение//////////////////
     ///////////////////////////////////////////////////////////////////////////////
 
-    int **mat1;
+    int **splitM1First;
     splitMatrix(maxDimension,
                 castedM1,
-                mat1,
+                splitM1First,
                 0,
                 0);
-    int **mat2;
+    int **splitM1Second;
     splitMatrix(maxDimension,
                 castedM1,
-                mat2,
+                splitM1Second,
                 0,
                 maxDimension / 2);
-    int **mat3;
+    int **splitM1Third;
     splitMatrix(maxDimension,
                 castedM1,
-                mat3,
+                splitM1Third,
                 maxDimension / 2,
                 0);
-    int **mat4;
+    int **splitM1Fourth;
     splitMatrix(maxDimension,
                 castedM1,
-                mat4,
+                splitM1Fourth,
                 maxDimension / 2,
                 maxDimension / 2);
 
-    int **mat5;
+    int **splitM2First;
     splitMatrix(maxDimension,
                 castedM2,
-                mat5,
+                splitM2First,
                 0,
                 0);
-    int **mat6;
+    int **splitM2Second;
     splitMatrix(maxDimension,
                 castedM2,
-                mat6,
+                splitM2Second,
                 0,
                 maxDimension / 2);
-    int **mat7;
+    int **splitM2Third;
     splitMatrix(maxDimension,
                 castedM2,
-                mat7,
+                splitM2Third,
                 maxDimension / 2,
                 0);
-    int **mat8;
+    int **splitM2Fourth;
     splitMatrix(maxDimension,
                 castedM2,
-                mat8,
+                splitM2Fourth,
                 maxDimension / 2,
                 maxDimension / 2);
 
@@ -140,37 +140,37 @@ int main() {
         for (int j = 0; j < maxDimension / 2; j++) {
             p1[i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p1[i][j] += (mat1[i][z] + mat4[i][z]) * (mat5[z][j] + mat8[z][j]);
+                p1[i][j] += (splitM1First[i][z] + splitM1Fourth[i][z]) * (splitM2First[z][j] + splitM2Fourth[z][j]);
             }
 
             p2[i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p2[i][j] += (mat3[i][z] + mat4[i][z]) * mat5[z][j];
+                p2[i][j] += (splitM1Third[i][z] + splitM1Fourth[i][z]) * splitM2First[z][j];
             }
 
             p3[i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p3[i][j] += mat1[i][z] * (mat6[z][j] - mat8[z][j]);
+                p3[i][j] += splitM1First[i][z] * (splitM2Second[z][j] - splitM2Fourth[z][j]);
             }
 
             p4[i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p4[i][j] += mat4[i][z] * (mat7[z][j] - mat5[z][j]);
+                p4[i][j] += splitM1Fourth[i][z] * (splitM2Third[z][j] - splitM2First[z][j]);
             }
 
             p5[i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p5[i][j] += (mat1[i][z] + mat2[i][z]) * mat8[z][j];
+                p5[i][j] += (splitM1First[i][z] + splitM1Second[i][z]) * splitM2Fourth[z][j];
             }
 
             p6[i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p6[i][j] += (mat3[i][z] - mat1[i][z]) * (mat5[z][j] + mat6[z][j]);
+                p6[i][j] += (splitM1Third[i][z] - splitM1First[i][z]) * (splitM2First[z][j] + splitM2Second[z][j]);
             }
 
             p7[i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p7[i][j] += (mat2[i][z] - mat4[i][z]) * (mat7[z][j] + mat8[z][j]);
+                p7[i][j] += (splitM1Second[i][z] - splitM1Fourth[i][z]) * (splitM2Third[z][j] + splitM2Fourth[z][j]);
             }
         }
     }
@@ -297,14 +297,14 @@ int main() {
     for (int i = 0; i < f; i++)
         delete[] M6[i];
     for (int i = 0; i < maxDimension / 2; i++) {
-        delete[] mat1[i];
-        delete[] mat2[i];
-        delete[] mat3[i];
-        delete[] mat4[i];
-        delete[] mat5[i];
-        delete[] mat6[i];
-        delete[] mat7[i];
-        delete[] mat8[i];
+        delete[] splitM1First[i];
+        delete[] splitM1Second[i];
+        delete[] splitM1Third[i];
+        delete[] splitM1Fourth[i];
+        delete[] splitM2First[i];
+        delete[] splitM2Second[i];
+        delete[] splitM2Third[i];
+        delete[] splitM2Fourth[i];
         delete[] mat9[i];
         delete[] mat10[i];
         delete[] mat11[i];
@@ -318,7 +318,7 @@ int main() {
         delete[] p7[i];
     }
     delete[] M1, M2, castedM1, castedM2, M5, M6;
-    delete[] mat1, mat2, mat3, mat4, mat5, mat6, mat7, mat8, mat9, mat10, mat11, mat12;
+    delete[] splitM1First, splitM1Second, splitM1Third, splitM1Fourth, splitM2First, splitM2Second, splitM2Third, splitM2Fourth, mat9, mat10, mat11, mat12;
     delete[] p1, p2, p3, p4, p5, p6, p7;
 
     return 0;
