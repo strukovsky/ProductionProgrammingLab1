@@ -54,7 +54,7 @@ int main() {
      * They comprise 2 matrices (4 parts for each one respectively)
      */
     int *** splittedMatrices = new int**[8];
-    
+
     splitMatrix(maxDimension,
                 castedM1,
                 splittedMatrices[0],
@@ -118,22 +118,9 @@ int main() {
     ///////////////////////////////////////////////////////////////////////////////
     ///////////////////////Создание вспомогательных матриц/////////////////////////
     ///////////////////////////////////////////////////////////////////////////////
-
-    int **mat9 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat9[i] = new int[maxDimension / 2];
-    }
-    int **mat10 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat10[i] = new int[maxDimension / 2];
-    }
-    int **mat11 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat11[i] = new int[maxDimension / 2];
-    }
-    int **mat12 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat12[i] = new int[maxDimension / 2];
+    int *** supportMatrices = new int**[4];
+    for (int i = 0; i < 4; ++i) {
+        initMatrix(maxDimension, supportMatrices[i]);
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -142,10 +129,10 @@ int main() {
 
     for (int i = 0; i < maxDimension / 2; i++) {
         for (int j = 0; j < maxDimension / 2; j++) {
-            mat9[i][j] = intermediateMatrices[0][i][j] + intermediateMatrices[3][i][j] - intermediateMatrices[4][i][j] + intermediateMatrices[6][i][j];
-            mat10[i][j] = intermediateMatrices[2][i][j] + intermediateMatrices[4][i][j];
-            mat11[i][j] = intermediateMatrices[1][i][j] + intermediateMatrices[3][i][j];
-            mat12[i][j] = intermediateMatrices[0][i][j] - intermediateMatrices[1][i][j] + intermediateMatrices[2][i][j] + intermediateMatrices[5][i][j];
+            supportMatrices[0][i][j] = intermediateMatrices[0][i][j] + intermediateMatrices[3][i][j] - intermediateMatrices[4][i][j] + intermediateMatrices[6][i][j];
+            supportMatrices[1][i][j] = intermediateMatrices[2][i][j] + intermediateMatrices[4][i][j];
+            supportMatrices[2][i][j] = intermediateMatrices[1][i][j] + intermediateMatrices[3][i][j];
+            supportMatrices[3][i][j] = intermediateMatrices[0][i][j] - intermediateMatrices[1][i][j] + intermediateMatrices[2][i][j] + intermediateMatrices[5][i][j];
         }
     }
 
@@ -164,10 +151,10 @@ int main() {
 
     for (int i = 0; i < maxDimension / 2; i++) {
         for (int j = 0; j < maxDimension / 2; j++) {
-            M5[i][j] = mat9[i][j];
-            M5[i][j + maxDimension / 2] = mat10[i][j];
-            M5[i + maxDimension / 2][j] = mat11[i][j];
-            M5[i + maxDimension / 2][j + maxDimension / 2] = mat12[i][j];
+            M5[i][j] = supportMatrices[0][i][j];
+            M5[i][j + maxDimension / 2] = supportMatrices[1][i][j];
+            M5[i + maxDimension / 2][j] = supportMatrices[2][i][j];
+            M5[i + maxDimension / 2][j + maxDimension / 2] = supportMatrices[3][i][j];
         }
     }
 
@@ -245,10 +232,10 @@ int main() {
         delete[] splittedMatrices[5][i];
         delete[] splittedMatrices[6][i];
         delete[] splittedMatrices[7][i];
-        delete[] mat9[i];
-        delete[] mat10[i];
-        delete[] mat11[i];
-        delete[] mat12[i];
+        delete[] supportMatrices[0][i];
+        delete[] supportMatrices[1][i];
+        delete[] supportMatrices[2][i];
+        delete[] supportMatrices[3][i];
         delete[] intermediateMatrices[0][i];
         delete[] intermediateMatrices[1][i];
         delete[] intermediateMatrices[2][i];
@@ -258,7 +245,7 @@ int main() {
         delete[] intermediateMatrices[6][i];
     }
     delete[] M1, M2, castedM1, castedM2, M5, M6;
-    delete[] splittedMatrices[0], splittedMatrices[1], splittedMatrices[2], splittedMatrices[3], splittedMatrices[4], splittedMatrices[5], splittedMatrices[6], splittedMatrices[7], mat9, mat10, mat11, mat12;
+    delete[] splittedMatrices[0], splittedMatrices[1], splittedMatrices[2], splittedMatrices[3], splittedMatrices[4], splittedMatrices[5], splittedMatrices[6], splittedMatrices[7], supportMatrices[0], supportMatrices[1], supportMatrices[2], supportMatrices[3];
     // delete[] intermediateMatrices[0], intermediateMatrices[1], intermediateMatrices[2], intermediateMatrices[3], intermediateMatrices[4], intermediateMatrices[5], intermediateMatrices[6];
 
     return 0;

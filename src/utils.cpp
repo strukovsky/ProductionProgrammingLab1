@@ -15,9 +15,9 @@ void printMatrix(int n, int m, int *const *matrix) {
     }
 }
 
-void initMatrix(int maxDimension, int **&result) {
-    result = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        result[i] = new int[maxDimension / 2];
+void initMatrix(int dimension, int **&result) {
+    result = new int *[dimension / 2];
+    for (int i = 0; i < dimension / 2; i++) {
+        result[i] = new int[dimension / 2];
     }
 }
