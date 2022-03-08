@@ -4,6 +4,7 @@
 #include "headers/setup.h"
 #include "headers/fill.h"
 #include "headers/cast.h"
+#include "headers/split.h"
 
 using namespace std;
 
@@ -47,30 +48,32 @@ int main() {
     ///////////////Разбиение матриц на подматрицы и их заполнение//////////////////
     ///////////////////////////////////////////////////////////////////////////////
 
-    int **mat1 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat1[i] = new int[maxDimension / 2];
-        for (int j = 0; j < maxDimension / 2; j++)
-            mat1[i][j] = castedM1[i][j];
-    }
-    int **mat2 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat2[i] = new int[maxDimension / 2];
-        for (int j = 0; j < maxDimension / 2; j++)
-            mat2[i][j] = castedM1[i][j + maxDimension / 2];
-    }
-    int **mat3 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat3[i] = new int[maxDimension / 2];
-        for (int j = 0; j < maxDimension / 2; j++)
-            mat3[i][j] = castedM1[i + maxDimension / 2][j];
-    }
-    int **mat4 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        mat4[i] = new int[maxDimension / 2];
-        for (int j = 0; j < maxDimension / 2; j++)
-            mat4[i][j] = castedM1[i + maxDimension / 2][j + maxDimension / 2];
-    }
+    int **mat1;
+    splitMatrix(maxDimension,
+                castedM1,
+                mat1,
+                0,
+                0);
+    int **mat2;
+    splitMatrix(maxDimension,
+                castedM1,
+                mat2,
+                0,
+                maxDimension / 2);
+    int **mat3;
+    splitMatrix(maxDimension,
+                castedM1,
+                mat3,
+                maxDimension / 2,
+                0);
+    int **mat4;
+    splitMatrix(maxDimension,
+                castedM1,
+                mat4,
+                maxDimension / 2,
+                maxDimension / 2);
+
+
     int **mat5 = new int *[maxDimension / 2];
     for (int i = 0; i < maxDimension / 2; i++) {
         mat5[i] = new int[maxDimension / 2];
