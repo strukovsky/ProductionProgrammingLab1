@@ -7,6 +7,7 @@
 
 
 void printMatrix(int n, int m, int *const *matrix);
+void initMatrix(int maxDimension, int **&result);
 
 
 #endif //LAB1_UTILS_H

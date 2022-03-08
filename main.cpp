@@ -5,13 +5,14 @@
 #include "headers/fill.h"
 #include "headers/cast.h"
 #include "headers/split.h"
+#include "headers/utils.h"
 
 using namespace std;
 
 
 int main() {
     srand(time(NULL));
-    int n1, m1, n2, m2, k, maxDimension = 2;
+    int n1, m1, n2, m2, maxDimension = 2;
     system("chcp 1251");
     cout << "Вас приветствует программа" << endl <<
          "быстрого перемножения матриц методом Штрассена\n\n";
@@ -103,33 +104,9 @@ int main() {
     ////////////////////////Создание промежуточных матриц//////////////////////////
     ///////////////////////////////////////////////////////////////////////////////
 
-    int **p1 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        p1[i] = new int[maxDimension / 2];
-    }
-    int **p2 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        p2[i] = new int[maxDimension / 2];
-    }
-    int **p3 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        p3[i] = new int[maxDimension / 2];
-    }
-    int **p4 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        p4[i] = new int[maxDimension / 2];
-    }
-    int **p5 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        p5[i] = new int[maxDimension / 2];
-    }
-    int **p6 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        p6[i] = new int[maxDimension / 2];
-    }
-    int **p7 = new int *[maxDimension / 2];
-    for (int i = 0; i < maxDimension / 2; i++) {
-        p7[i] = new int[maxDimension / 2];
+    int *** intermediateMatrices = new int**[7];
+    for (int i = 0; i < 7; ++i) {
+        initMatrix(maxDimension, intermediateMatrices[i]);
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -138,39 +115,39 @@ int main() {
 
     for (int i = 0; i < maxDimension / 2; i++) {
         for (int j = 0; j < maxDimension / 2; j++) {
-            p1[i][j] = 0;
+            intermediateMatrices[0][i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p1[i][j] += (splitM1First[i][z] + splitM1Fourth[i][z]) * (splitM2First[z][j] + splitM2Fourth[z][j]);
+                intermediateMatrices[0][i][j] += (splitM1First[i][z] + splitM1Fourth[i][z]) * (splitM2First[z][j] + splitM2Fourth[z][j]);
             }
 
-            p2[i][j] = 0;
+            intermediateMatrices[1][i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p2[i][j] += (splitM1Third[i][z] + splitM1Fourth[i][z]) * splitM2First[z][j];
+                intermediateMatrices[1][i][j] += (splitM1Third[i][z] + splitM1Fourth[i][z]) * splitM2First[z][j];
             }
 
-            p3[i][j] = 0;
+            intermediateMatrices[2][i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p3[i][j] += splitM1First[i][z] * (splitM2Second[z][j] - splitM2Fourth[z][j]);
+                intermediateMatrices[2][i][j] += splitM1First[i][z] * (splitM2Second[z][j] - splitM2Fourth[z][j]);
             }
 
-            p4[i][j] = 0;
+            intermediateMatrices[3][i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p4[i][j] += splitM1Fourth[i][z] * (splitM2Third[z][j] - splitM2First[z][j]);
+                intermediateMatrices[3][i][j] += splitM1Fourth[i][z] * (splitM2Third[z][j] - splitM2First[z][j]);
             }
 
-            p5[i][j] = 0;
+            intermediateMatrices[4][i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p5[i][j] += (splitM1First[i][z] + splitM1Second[i][z]) * splitM2Fourth[z][j];
+                intermediateMatrices[4][i][j] += (splitM1First[i][z] + splitM1Second[i][z]) * splitM2Fourth[z][j];
             }
 
-            p6[i][j] = 0;
+            intermediateMatrices[5][i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p6[i][j] += (splitM1Third[i][z] - splitM1First[i][z]) * (splitM2First[z][j] + splitM2Second[z][j]);
+                intermediateMatrices[5][i][j] += (splitM1Third[i][z] - splitM1First[i][z]) * (splitM2First[z][j] + splitM2Second[z][j]);
             }
 
-            p7[i][j] = 0;
+            intermediateMatrices[6][i][j] = 0;
             for (int z = 0; z < maxDimension / 2; z++) {
-                p7[i][j] += (splitM1Second[i][z] - splitM1Fourth[i][z]) * (splitM2Third[z][j] + splitM2Fourth[z][j]);
+                intermediateMatrices[6][i][j] += (splitM1Second[i][z] - splitM1Fourth[i][z]) * (splitM2Third[z][j] + splitM2Fourth[z][j]);
             }
         }
     }
@@ -202,10 +179,10 @@ int main() {
 
     for (int i = 0; i < maxDimension / 2; i++) {
         for (int j = 0; j < maxDimension / 2; j++) {
-            mat9[i][j] = p1[i][j] + p4[i][j] - p5[i][j] + p7[i][j];
-            mat10[i][j] = p3[i][j] + p5[i][j];
-            mat11[i][j] = p2[i][j] + p4[i][j];
-            mat12[i][j] = p1[i][j] - p2[i][j] + p3[i][j] + p6[i][j];
+            mat9[i][j] = intermediateMatrices[0][i][j] + intermediateMatrices[3][i][j] - intermediateMatrices[4][i][j] + intermediateMatrices[6][i][j];
+            mat10[i][j] = intermediateMatrices[2][i][j] + intermediateMatrices[4][i][j];
+            mat11[i][j] = intermediateMatrices[1][i][j] + intermediateMatrices[3][i][j];
+            mat12[i][j] = intermediateMatrices[0][i][j] - intermediateMatrices[1][i][j] + intermediateMatrices[2][i][j] + intermediateMatrices[5][i][j];
         }
     }
 
@@ -309,17 +286,17 @@ int main() {
         delete[] mat10[i];
         delete[] mat11[i];
         delete[] mat12[i];
-        delete[] p1[i];
-        delete[] p2[i];
-        delete[] p3[i];
-        delete[] p4[i];
-        delete[] p5[i];
-        delete[] p6[i];
-        delete[] p7[i];
+        delete[] intermediateMatrices[0][i];
+        delete[] intermediateMatrices[1][i];
+        delete[] intermediateMatrices[2][i];
+        delete[] intermediateMatrices[3][i];
+        delete[] intermediateMatrices[4][i];
+        delete[] intermediateMatrices[5][i];
+        delete[] intermediateMatrices[6][i];
     }
     delete[] M1, M2, castedM1, castedM2, M5, M6;
     delete[] splitM1First, splitM1Second, splitM1Third, splitM1Fourth, splitM2First, splitM2Second, splitM2Third, splitM2Fourth, mat9, mat10, mat11, mat12;
-    delete[] p1, p2, p3, p4, p5, p6, p7;
+    // delete[] intermediateMatrices[0], intermediateMatrices[1], intermediateMatrices[2], intermediateMatrices[3], intermediateMatrices[4], intermediateMatrices[5], intermediateMatrices[6];
 
     return 0;
 }

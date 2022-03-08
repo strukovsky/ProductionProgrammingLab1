@@ -14,3 +14,10 @@ void printMatrix(int n, int m, int *const *matrix) {
         cout << endl;
     }
 }
+
+void initMatrix(int maxDimension, int **&result) {
+    result = new int *[maxDimension / 2];
+    for (int i = 0; i < maxDimension / 2; i++) {
+        result[i] = new int[maxDimension / 2];
+    }
+}
