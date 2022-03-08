@@ -6,6 +6,7 @@
 #include "headers/cast.h"
 #include "headers/split.h"
 #include "headers/utils.h"
+#include "headers/intermediate.h"
 
 using namespace std;
 
@@ -104,6 +105,9 @@ int main() {
     ////////////////////////Создание промежуточных матриц//////////////////////////
     ///////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Intermediate matrices are stored as sequence of matrices in intermediateMatrices
+     */
     int *** intermediateMatrices = new int**[7];
     for (int i = 0; i < 7; ++i) {
         initMatrix(maxDimension, intermediateMatrices[i]);
@@ -112,45 +116,9 @@ int main() {
     ///////////////////////////////////////////////////////////////////////////////
     ////////////////////Вычисление значений промежуточных матриц///////////////////
     ///////////////////////////////////////////////////////////////////////////////
-
-    for (int i = 0; i < maxDimension / 2; i++) {
-        for (int j = 0; j < maxDimension / 2; j++) {
-            intermediateMatrices[0][i][j] = 0;
-            for (int z = 0; z < maxDimension / 2; z++) {
-                intermediateMatrices[0][i][j] += (splitM1First[i][z] + splitM1Fourth[i][z]) * (splitM2First[z][j] + splitM2Fourth[z][j]);
-            }
-
-            intermediateMatrices[1][i][j] = 0;
-            for (int z = 0; z < maxDimension / 2; z++) {
-                intermediateMatrices[1][i][j] += (splitM1Third[i][z] + splitM1Fourth[i][z]) * splitM2First[z][j];
-            }
-
-            intermediateMatrices[2][i][j] = 0;
-            for (int z = 0; z < maxDimension / 2; z++) {
-                intermediateMatrices[2][i][j] += splitM1First[i][z] * (splitM2Second[z][j] - splitM2Fourth[z][j]);
-            }
-
-            intermediateMatrices[3][i][j] = 0;
-            for (int z = 0; z < maxDimension / 2; z++) {
-                intermediateMatrices[3][i][j] += splitM1Fourth[i][z] * (splitM2Third[z][j] - splitM2First[z][j]);
-            }
-
-            intermediateMatrices[4][i][j] = 0;
-            for (int z = 0; z < maxDimension / 2; z++) {
-                intermediateMatrices[4][i][j] += (splitM1First[i][z] + splitM1Second[i][z]) * splitM2Fourth[z][j];
-            }
-
-            intermediateMatrices[5][i][j] = 0;
-            for (int z = 0; z < maxDimension / 2; z++) {
-                intermediateMatrices[5][i][j] += (splitM1Third[i][z] - splitM1First[i][z]) * (splitM2First[z][j] + splitM2Second[z][j]);
-            }
-
-            intermediateMatrices[6][i][j] = 0;
-            for (int z = 0; z < maxDimension / 2; z++) {
-                intermediateMatrices[6][i][j] += (splitM1Second[i][z] - splitM1Fourth[i][z]) * (splitM2Third[z][j] + splitM2Fourth[z][j]);
-            }
-        }
-    }
+    calculateIntermediateMatrices(maxDimension, splitM1First, splitM1Second, splitM1Third, splitM1Fourth, splitM2First,
+                                  splitM2Second, splitM2Third,
+                                  splitM2Fourth, intermediateMatrices);
 
     ///////////////////////////////////////////////////////////////////////////////
     ///////////////////////Создание вспомогательных матриц/////////////////////////
