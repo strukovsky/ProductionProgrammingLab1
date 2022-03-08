@@ -49,54 +49,51 @@ int main() {
     ///////////////////////////////////////////////////////////////////////////////
     ///////////////Разбиение матриц на подматрицы и их заполнение//////////////////
     ///////////////////////////////////////////////////////////////////////////////
+    /**
+     * Eight splitted matrices are stored in this array
+     * They comprise 2 matrices (4 parts for each one respectively)
+     */
+    int *** splittedMatrices = new int**[8];
+    
+    splitMatrix(maxDimension,
+                castedM1,
+                splittedMatrices[0],
+                0,
+                0);
+    splitMatrix(maxDimension,
+                castedM1,
+                splittedMatrices[1],
+                0,
+                maxDimension / 2);
+    splitMatrix(maxDimension,
+                castedM1,
+                splittedMatrices[2],
+                maxDimension / 2,
+                0);
+    splitMatrix(maxDimension,
+                castedM1,
+                splittedMatrices[3],
+                maxDimension / 2,
+                maxDimension / 2);
 
-    int **splitM1First;
     splitMatrix(maxDimension,
-                castedM1,
-                splitM1First,
+                castedM2,
+                splittedMatrices[4],
                 0,
                 0);
-    int **splitM1Second;
     splitMatrix(maxDimension,
-                castedM1,
-                splitM1Second,
+                castedM2,
+                splittedMatrices[5],
                 0,
                 maxDimension / 2);
-    int **splitM1Third;
     splitMatrix(maxDimension,
-                castedM1,
-                splitM1Third,
+                castedM2,
+                splittedMatrices[6],
                 maxDimension / 2,
                 0);
-    int **splitM1Fourth;
-    splitMatrix(maxDimension,
-                castedM1,
-                splitM1Fourth,
-                maxDimension / 2,
-                maxDimension / 2);
-
-    int **splitM2First;
     splitMatrix(maxDimension,
                 castedM2,
-                splitM2First,
-                0,
-                0);
-    int **splitM2Second;
-    splitMatrix(maxDimension,
-                castedM2,
-                splitM2Second,
-                0,
-                maxDimension / 2);
-    int **splitM2Third;
-    splitMatrix(maxDimension,
-                castedM2,
-                splitM2Third,
-                maxDimension / 2,
-                0);
-    int **splitM2Fourth;
-    splitMatrix(maxDimension,
-                castedM2,
-                splitM2Fourth,
+                splittedMatrices[7],
                 maxDimension / 2,
                 maxDimension / 2);
 
@@ -116,9 +113,7 @@ int main() {
     ///////////////////////////////////////////////////////////////////////////////
     ////////////////////Вычисление значений промежуточных матриц///////////////////
     ///////////////////////////////////////////////////////////////////////////////
-    calculateIntermediateMatrices(maxDimension, splitM1First, splitM1Second, splitM1Third, splitM1Fourth, splitM2First,
-                                  splitM2Second, splitM2Third,
-                                  splitM2Fourth, intermediateMatrices);
+    calculateIntermediateMatrices(maxDimension, splittedMatrices, intermediateMatrices);
 
     ///////////////////////////////////////////////////////////////////////////////
     ///////////////////////Создание вспомогательных матриц/////////////////////////
@@ -242,14 +237,14 @@ int main() {
     for (int i = 0; i < f; i++)
         delete[] M6[i];
     for (int i = 0; i < maxDimension / 2; i++) {
-        delete[] splitM1First[i];
-        delete[] splitM1Second[i];
-        delete[] splitM1Third[i];
-        delete[] splitM1Fourth[i];
-        delete[] splitM2First[i];
-        delete[] splitM2Second[i];
-        delete[] splitM2Third[i];
-        delete[] splitM2Fourth[i];
+        delete[] splittedMatrices[0][i];
+        delete[] splittedMatrices[1][i];
+        delete[] splittedMatrices[2][i];
+        delete[] splittedMatrices[3][i];
+        delete[] splittedMatrices[4][i];
+        delete[] splittedMatrices[5][i];
+        delete[] splittedMatrices[6][i];
+        delete[] splittedMatrices[7][i];
         delete[] mat9[i];
         delete[] mat10[i];
         delete[] mat11[i];
@@ -263,7 +258,7 @@ int main() {
         delete[] intermediateMatrices[6][i];
     }
     delete[] M1, M2, castedM1, castedM2, M5, M6;
-    delete[] splitM1First, splitM1Second, splitM1Third, splitM1Fourth, splitM2First, splitM2Second, splitM2Third, splitM2Fourth, mat9, mat10, mat11, mat12;
+    delete[] splittedMatrices[0], splittedMatrices[1], splittedMatrices[2], splittedMatrices[3], splittedMatrices[4], splittedMatrices[5], splittedMatrices[6], splittedMatrices[7], mat9, mat10, mat11, mat12;
     // delete[] intermediateMatrices[0], intermediateMatrices[1], intermediateMatrices[2], intermediateMatrices[3], intermediateMatrices[4], intermediateMatrices[5], intermediateMatrices[6];
 
     return 0;
