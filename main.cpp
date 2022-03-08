@@ -2,7 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 #include "headers/setup.h"
+#include "headers/fill.h"
 using namespace std;
+
 
 
 int main() {
@@ -25,53 +27,7 @@ int main() {
     ////////////////Выбор способа заполнения и заполнение матриц///////////////////
     ///////////////////////////////////////////////////////////////////////////////
 
-    do {
-        cout << "Выберите способ заполнения матриц\n" <<
-             "1 - Вручную \n2 - Случайным образом\n";
-        cin >> k;
-    } while (k < 1 || k > 2);
-    switch (k) {
-        case 1:
-            for (int i = 0; i < n1; i++)
-                for (int j = 0; j < m1; j++)
-                    cin >> M1[i][j];
-            for (int i = 0; i < n2; i++)
-                for (int j = 0; j < m2; j++)
-                    cin >> M2[i][j];
-            cout << "\nМатрица 1\n\n";
-            for (int i = 0; i < n1; i++) {
-                for (int j = 0; j < m1; j++)
-                    cout << M1[i][j] << " ";
-                cout << endl;
-            }
-            cout << "\nМатрица 2\n\n";
-            for (int i = 0; i < n2; i++) {
-                for (int j = 0; j < m2; j++)
-                    cout << M2[i][j] << " ";
-                cout << endl;
-            }
-            break;
-        case 2:
-            for (int i = 0; i < n1; i++)
-                for (int j = 0; j < m1; j++)
-                    M1[i][j] = rand() % 10;
-            for (int i = 0; i < n2; i++)
-                for (int j = 0; j < m2; j++)
-                    M2[i][j] = rand() % 10;
-            cout << "\nМатрица 1\n\n";
-            for (int i = 0; i < n1; i++) {
-                for (int j = 0; j < m1; j++)
-                    cout << M1[i][j] << " ";
-                cout << endl;
-            }
-            cout << "\nМатрица 2\n\n";
-            for (int i = 0; i < n2; i++) {
-                for (int j = 0; j < m2; j++)
-                    cout << M2[i][j] << " ";
-                cout << endl;
-            }
-            break;
-    }
+    fillMatrices(n1, m1, n2, m2, M1, M2);
 
     ///////////////////////////////////////////////////////////////////////////////
     /////////////////Приведение матриц к требуемому размеру////////////////////////
