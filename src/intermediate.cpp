@@ -58,3 +58,14 @@ void calculateIntermediateMatrices(int maxDimension, int ***splittedMatrices,
         }
     }
 }
+
+void writeFromIntermediate(int maxDimension, int **const *intermediateMatrices, int ***supportMatrices) {
+    for (int i = 0; i < maxDimension / 2; i++) {
+        for (int j = 0; j < maxDimension / 2; j++) {
+            supportMatrices[0][i][j] = intermediateMatrices[0][i][j] + intermediateMatrices[3][i][j] - intermediateMatrices[4][i][j] + intermediateMatrices[6][i][j];
+            supportMatrices[1][i][j] = intermediateMatrices[2][i][j] + intermediateMatrices[4][i][j];
+            supportMatrices[2][i][j] = intermediateMatrices[1][i][j] + intermediateMatrices[3][i][j];
+            supportMatrices[3][i][j] = intermediateMatrices[0][i][j] - intermediateMatrices[1][i][j] + intermediateMatrices[2][i][j] + intermediateMatrices[5][i][j];
+        }
+    }
+}

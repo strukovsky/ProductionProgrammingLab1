@@ -8,6 +8,6 @@
 
 void calculateIntermediateMatrices(int maxDimension, int ***splittedMatrices,
                                    int ***intermediateMatrices);
-
+void writeFromIntermediate(int maxDimension, int **const *intermediateMatrices, int ***supportMatrices);
 
 #endif //LAB1_INTERMEDIATE_H
